@@ -62,18 +62,18 @@ def logout():
 def account():
     form = UpdateAccountForm()
     if form.validate_on_submit():
+        current_user.username = form.username.data
+        current_user.email = form.email.data
         old_pic = current_user.image_file
         if form.picture.data:
             pic_file = save_picture(form.picture.data)
             current_user.image_file = pic_file
-        current_user.username = form.username.data
-        current_user.email = form.email.data
+            if old_pic != default_pic:
+                old_pic = os.path.join(
+                    os.path.abspath(__file__ + "../../.."), 'static/profile_pics', old_pic)
+                if os.path.isfile(old_pic):
+                    os.remove(old_pic)
         db.session.commit()
-        if old_pic != default_pic:
-            old_pic = os.path.join(
-                os.path.abspath(__file__ + "../../.."), 'static/profile_pics',
-                old_pic)
-            os.remove(old_pic)
         flash('Your account is updated', 'success')
         return redirect(url_for("users.account"))
     elif request.method == 'GET':
