@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: zuman.ml
+Token: b522c2415b988e03275090d96230d8dd4c4d88cb0d43d855531bd05206cc9096

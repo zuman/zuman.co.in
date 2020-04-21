@@ -1,0 +1,18 @@
+<div class="jumbotron">
+    <div class="container content">
+        {% if data %}
+        {{data}}
+        {% else %}
+        <h1 class="jumbotron-heading">In Clause Maker tool</h1>
+        <p class="lead">This tool helps you to create an in-clause for a list of input separated by new line characters.
+        </p>
+        <p>This in-clause is used by most Database Administrators and Developers for their sql queries.</p>
+        <p>For example,</p>
+        <p>Input list =></p>
+        <p>abc<br>xyz</p>
+        <p>Output In-clause => in ('abc','xyz')</p>
+        <p>Note: This tool also accounts for Oracle database's 1000 entry limit for a clause. So if you input more
+            than a 1000 entries, they will be divided in sections of 1000s.</p>
+        {% endif %}
+    </div>
+</div>

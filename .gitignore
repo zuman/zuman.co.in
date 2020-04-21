@@ -1,0 +1,11 @@
+venv
+.vscode
+.idea
+__pycache__
+migrations
+
+profile_pics
+conf.py
+site.db
+requirements.txt
+enggart-72506-firebase-adminsdk-dcsh2-ea24ee5a1c.json

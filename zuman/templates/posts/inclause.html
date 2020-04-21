@@ -1,0 +1,67 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div class="row mt-4">
+    <div class="col-12 col-md-6">
+        <div class="content-section">
+            <form method="POST" action="{{url_for('posts.inclause')}}">
+                {{form.hidden_tag()}}
+                <fieldset class="form-group">
+                    <legend class="border-bottom">SQL In Clause Maker</legend>
+                    <div class="form-group row">
+                        <div class="text-md-right col-md-2">
+                            {{form.inputdata.label(class="col-form-label", rows="15")}}
+                        </div>
+                        <div class="col-md-10">
+                            {% if form.inputdata.errors %}
+                            {{form.inputdata(class="form-control form-control-lg is-invalid")}}
+                            <div class="invalid-feedback">
+                                {%for error in form.inputdata.errors%}
+                                <span>{{error}}</span>
+                                {%endfor%}
+                            </div>
+                            {% else %}
+                            {{form.inputdata(class="form-control", rows="15")}}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-form-label offset-md-2 col-md-10">
+                            {{form.submit(class="btn btn-primary")}}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    {% if current_user.is_authenticated and appdata['posts'].items %}
+    <div class="col-12 col-md-6">
+        {% for post in appdata['posts'].items %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="{{ url_for('posts.post', post_id=post.id) }}">{{ post.title }}</a>
+                    <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d %H:%M:%S') }}</small>
+                </div>
+                <p class="article-content">{{ post.content }}</p>
+            </div>
+        </article>
+        {% endfor %}
+        {% for page_num in appdata['posts'].iter_pages(left_edge=2, right_edge=2, left_current=2, right_current=3) %}
+        {% if page_num %}
+        {% if appdata['posts'].page == page_num %}
+        <a class="btn btn-info mb-4" href="{{ url_for('posts.inclause', page=page_num) }}">{{ page_num }}</a>
+        {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('posts.inclause', page=page_num) }}">{{ page_num }}</a>
+        {% endif %}
+        {% else %}
+        ...
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="col-12 col-md-6">
+        {% include 'posts/jumbo.html' %}
+    </div>
+    {% endif %}
+</div>
+{%endblock content%}
