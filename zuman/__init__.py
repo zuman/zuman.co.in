@@ -1,17 +1,22 @@
 from flask import Flask
-from zuman.conf import conf
-from zuman.config import Config
-from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_migrate import Migrate
+from flask_session import Session
+from flask_sqlalchemy import SQLAlchemy
+from flask_wtf.csrf import CSRFProtect
+
+from zuman.conf import conf
+from zuman.config import Config
 
 mail = Mail()
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 login_manager = LoginManager()
 migrate = Migrate()
+sess = Session()
+csrf = CSRFProtect()
 
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
@@ -27,8 +32,8 @@ def create_app(config=Config):
     login_manager.init_app(app)
     mail.init_app(app)
     migrate.init_app(app, db)
-
-    from zuman.models import User, Post
+    sess.init_app(app)
+    csrf.init_app(app)
 
     from zuman.main.routes import main
     from zuman.users.routes import users
