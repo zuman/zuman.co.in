@@ -1,5 +1,5 @@
 import os
-from flask import Blueprint, flash, redirect, render_template, request, url_for
+from flask import Blueprint, flash, redirect, render_template, request, url_for, session
 from flask_login import current_user, login_user, logout_user, login_required
 from zuman import bcrypt, db, appdata
 from zuman.models import User, default_pic
@@ -37,6 +37,7 @@ def register():
     form = RegistrationForm()
     appdata["title"] = "Register new account"
     if form.validate_on_submit():
+        session.clear()
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode("utf-8")
         user = User(
@@ -53,6 +54,7 @@ def register():
 
 @users.route("/logout")
 def logout():
+    session.clear()
     logout_user()
     return redirect(url_for("main.home"))
 
