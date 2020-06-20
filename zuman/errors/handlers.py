@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash
+from flask import Blueprint, render_template, flash, redirect, url_for
 from zuman import appdata
 
 errors = Blueprint('errors', __name__)
@@ -21,6 +21,11 @@ def error_405(error):
     appdata['title'] = '405'
     flash("Please check if you are logged in with correct user.", "danger")
     return render_template('errors/405.html', appdata=appdata), 405
+
+
+@errors.app_errorhandler(409)
+def error_409(error):
+    return redirect(url_for("users.login"))
 
 
 @errors.app_errorhandler(500)

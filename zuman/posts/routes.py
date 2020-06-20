@@ -7,12 +7,14 @@ from zuman import db, appdata
 from zuman.models import Post
 from zuman.posts.forms import EditClauseForm, InclauseForm
 from zuman.posts.utils import inclauserator
+from zuman.utils import validate_session
 
 posts = Blueprint('posts', __name__)
 
 
 @posts.route("/inclause", methods=["GET", "POST"])
 def inclause():
+    validate_session()
     page = request.args.get('page', 1, type=int)
     form = InclauseForm()
     appdata["title"] = "In-Clause App"
@@ -20,7 +22,7 @@ def inclause():
     if form.validate_on_submit():
         op = inclauserator(form.inputdata.data)
     if current_user.is_authenticated:
-        appdata['posts']=Post.query\
+        appdata['posts'] = Post.query\
             .filter_by(author=current_user)\
             .order_by(Post.date_accessed.desc())\
             .paginate(per_page=5, page=page)
@@ -32,6 +34,7 @@ def inclause():
 @posts.route("/post/<int:post_id>", methods=["GET", "POST"])
 @login_required
 def post(post_id):
+    validate_session()
     form = EditClauseForm()
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
@@ -53,6 +56,7 @@ def post(post_id):
 @posts.route("/post/<int:post_id>/delete", methods=["POST"])
 @login_required
 def delete_post(post_id):
+    validate_session()
     post = Post.query.get_or_404(post_id)
     if post.author != current_user:
         abort(403)
