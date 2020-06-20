@@ -26,5 +26,6 @@ conf['SESSION_COOKIE_SECURE'] = False  # True for Production
 conf['PERMANENT_SESSION_LIFETIME'] = 100  # Any integer to denote seconds
 conf['REMEMBER_COOKIE_DURATION'] = 100  # Any integer to denote seconds
 conf['REMEMBER_COOKIE_HTTPONLY'] = True
+conf['REMEMBER_COOKIE_SECURE'] = False  # True for Production
 
 ```
