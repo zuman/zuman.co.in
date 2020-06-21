@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-<div class="content-section">
-  <form method="POST" action="">
+<form method="POST" action="">
+  <div class="content-section">
     {{ form.hidden_tag() }}
     <fieldset class="form-group">
       <legend class="border-bottom mb-4">{{ appdata['legend'] }}</legend>
@@ -36,26 +36,25 @@
       <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
       {{ form.submit(class="btn btn-info") }}
     </div>
-  </form>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <form action="{{ url_for('posts.delete_post', post_id=post.id) }}" method="POST">
-          <input class="btn btn-danger" type="submit" value="Delete" />
-        </form>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input class="btn btn-danger" type="submit" value="Delete"
+            formaction="{{ url_for('posts.delete_post', post_id=post.id) }}">
+        </div>
       </div>
     </div>
   </div>
-</div>
+</form>
 {% endblock content %}
