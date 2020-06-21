@@ -20,7 +20,7 @@ csrf = CSRFProtect()
 
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
-appdata = {"website_name": "Zuman's"}
+appdata = {"website_name": "Zuman's", "user_sessions": {}}
 
 
 def create_app(config=Config):

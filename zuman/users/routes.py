@@ -22,6 +22,7 @@ def login():
                                                form.password.data):
             login_user(user, remember=form.remember.data)
             set_session()
+            appdata['user_sessions'][current_user.id] = session.sid
             flash("You have been logged in!", "success")
             next_page = request.args.get("next")
             return redirect(next_page) if next_page else redirect(
