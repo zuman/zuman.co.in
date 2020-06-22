@@ -19,7 +19,7 @@ def validate_session():
         logging.debug("> user.id\t"+current_user.sid[-12:])
         logging.info(f"> extra-session-logout {current_user.username} ...")
         logout()
-        flash("Login detected from another browser or device. 1", "danger")
+        flash("Login detected from another browser or device.", "danger")
         flash("Please login again to continue using the site here!", "danger")
         abort(409)
 
