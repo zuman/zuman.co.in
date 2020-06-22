@@ -1,8 +1,12 @@
 from datetime import datetime
-from zuman import db, login_manager
+from secrets import token_hex
+
 from flask import current_app
 from flask_login import UserMixin
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
+
+from zuman import db, login_manager
+from zuman.utils import create_str
 
 
 @login_manager.user_loader
@@ -20,6 +24,7 @@ class User(db.Model, UserMixin):
     image_file = db.Column(db.String(50), nullable=False, default=default_pic)
     password = db.Column(db.String(60), nullable=False)
     posts = db.relationship("Post", backref="author", lazy=True)
+    sid = db.Column(db.String(36), nullable=False, unique=True, default='no_login'+token_hex(14))
 
     def get_reset_token(self, expires=1800):
         s = Serializer(current_app.config["SECRET_KEY"], expires)
@@ -35,7 +40,7 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
     def __repr__(self):
-        return f"User('{self.username}','{self.email}','{self.image_file}')"
+        return create_str(self, ['_sa_instance_state', 'password'])
 
 
 class Post(db.Model):

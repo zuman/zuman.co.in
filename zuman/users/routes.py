@@ -1,11 +1,17 @@
+import logging
 import os
-from flask import Blueprint, flash, redirect, render_template, request, url_for, session
-from flask_login import current_user, login_user, login_required
-from zuman import bcrypt, db, appdata
+
+from flask import (Blueprint, flash, redirect, render_template, request,
+                   session, url_for)
+from flask_login import current_user, login_required, login_user
+
+from zuman import appdata, bcrypt, db
 from zuman.models import User, default_pic
-from zuman.users.forms import LoginForm, RegistrationForm, UpdateAccountForm, RequestResetForm, ResetPasswordForm
+from zuman.users.forms import (LoginForm, RegistrationForm, RequestResetForm,
+                               ResetPasswordForm, UpdateAccountForm)
 from zuman.users.utils import save_picture, send_reset_email
-from zuman.utils import set_session, validate_session, logout as logout_user
+from zuman.utils import logout as logout_user
+from zuman.utils import set_session, validate_session
 
 users = Blueprint('users', __name__)
 
@@ -22,6 +28,7 @@ def login():
                                                form.password.data):
             login_user(user, remember=form.remember.data)
             set_session()
+            logging.info(f"> login {current_user.username} ...")
             flash("You have been logged in!", "success")
             next_page = request.args.get("next")
             return redirect(next_page) if next_page else redirect(
@@ -56,6 +63,7 @@ def register():
 
 @users.route("/logout")
 def logout():
+    logging.info(f"> logout {current_user.username} ...")
     logout_user()
     return redirect(url_for("main.home"))
 

@@ -1,3 +1,6 @@
+import logging
+from secrets import token_hex
+
 from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
@@ -6,11 +9,9 @@ from flask_migrate import Migrate
 from flask_session import Session
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
-from secrets import token_hex
 
 from zuman.conf import conf
 from zuman.config import Config
-import logging
 
 mail = Mail()
 db = SQLAlchemy()
@@ -22,16 +23,18 @@ csrf = CSRFProtect()
 
 login_manager.login_view = "users.login"
 login_manager.login_message_category = "info"
-appdata = {"website_name": "Zuman's", "user_sessions": {}, "token":token_hex(4)}
+appdata = {"website_name": "Zuman's"}
 
 
 def create_app(config=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
-    
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
+
+    logging.basicConfig(level=config.LOG_LEVEL,
+                        format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+    logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = logger.handlers
+    app.logger.setLevel(logger.level)
 
     db.init_app(app)
     bcrypt.init_app(app)
