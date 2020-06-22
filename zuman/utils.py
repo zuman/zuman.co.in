@@ -15,8 +15,8 @@ def validate_session():
             or ('HTTP_USER_AGENT' not in session)\
             or (session['HTTP_USER_AGENT'] != request.environ['HTTP_USER_AGENT']):
 
-        logging.debug("> current_user.sid\t"+current_user.sid)
-        logging.debug("> session.sid\t\t"+session.sid)
+        logging.debug("> sess.id\t"+session.sid[-12:])
+        logging.debug("> user.id\t"+current_user.sid[-12:])
         logging.info(f"> extra-session-logout {current_user.username} ...")
         logout()
         flash("Login detected from another browser or device. 1", "danger")
