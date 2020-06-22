@@ -20,6 +20,7 @@ conf['SECRET_KEY'] = "..."
 conf["SQLALCHEMY_DATABASE_URI"] = '...'
 conf['MAIL_USERNAME'] = '...'
 conf['MAIL_PASSWORD'] = '...'
+conf['LOG_LEVEL'] = '...'
 conf['SESSION_TYPE'] = '...'
 conf['SESSION_COOKIE_NAME'] = '...'
 conf['SESSION_COOKIE_SECURE'] = False  # True for Production
