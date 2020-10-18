@@ -12,6 +12,8 @@
 
     {%if appdata['title']%}
     <title>{{appdata['title']}}</title>
+    {%elif session['title']%}
+    <title>{{session['title']}}</title>
     {%else%}
     <title>{{appdata['website_name']}}</title>
     {%endif%}
@@ -140,6 +142,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"
         integrity="sha256-z6FznuNG1jo9PP3/jBjL6P3tvLMtSwiVAowZPOgo56U=" crossorigin="anonymous"></script>
     <script src="{{url_for('static', filename='custom.js')}}"></script>
+
+    {% if 'apage' in session['js'] %}
+    <script src="{{url_for('static', filename='stimulus/js/apage.js', v=session['version'])}}"></script>
+    {% endif %}
 
 </body>
 

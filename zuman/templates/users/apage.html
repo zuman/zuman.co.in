@@ -1,0 +1,18 @@
+{%extends 'layout.html'%}
+{%block content%}
+<div class="row mt-4">
+    <div class="col-md-8 offset-md-2 col-xl-6 offset-xl-3">
+        <div class="content-section">
+            <div class="media mt-2">
+                <img class="rounded-circle account-img mr-3" src="{{appdata['image_file']}}" height="100">
+                <div class="media-body">
+                    <h2 class="account-heading">{{ current_user.username }}</h2>
+                    <p class="text-secondary">{{ current_user.email }}</p>
+                </div>
+            </div>
+            <div class="alert alert-info" role="alert">Cookie: <p id="cookie">Loading...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{%endblock content%}

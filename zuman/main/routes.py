@@ -1,8 +1,8 @@
-from flask import Blueprint
-from flask import render_template
-from flask_login import current_user
-from zuman import appdata
-from zuman import db
+import json
+from flask import Blueprint, render_template
+from flask_login import current_user, login_required
+from zuman import appdata, db
+from zuman.utils import updateSession
 
 main = Blueprint('main', __name__)
 
@@ -37,4 +37,11 @@ def test():
     for dt in db_exec:
         js = {key: dt[key] for key in dt.keys()}
 
-    return str(js)
+    return json.dumps(js)
+
+
+@main.route("/info")
+@login_required
+def apiUI():
+    updateSession("API test page", js=['apage'])
+    return render_template("users/apage.html", appdata=appdata)
