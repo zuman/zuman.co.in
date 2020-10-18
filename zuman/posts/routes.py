@@ -36,31 +36,31 @@ def inclause():
 def post(post_id):
     validate_session()
     form = EditClauseForm()
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    postp = Post.query.get_or_404(post_id)
+    if postp.author != current_user:
         abort(403)
     if form.validate_on_submit():
-        post.title = form.title.data
-        post.content = form.content.data
-        post.date_accessed = datetime.utcnow()
+        postp.title = form.title.data
+        postp.content = form.content.data
+        postp.date_accessed = datetime.utcnow()
         db.session.commit()
         flash("This inclause has been updated.", "success")
         return redirect(url_for('posts.inclause'))
-    appdata['title'] = post.title
+    appdata['title'] = postp.title
     appdata['legend'] = 'Update clause'
-    form.title.data = post.title
-    form.content.data = post.content
-    return render_template('posts/post.html', appdata=appdata, form=form, post=post)
+    form.title.data = postp.title
+    form.content.data = postp.content
+    return render_template('posts/post.html', appdata=appdata, form=form, post=postp)
 
 
 @posts.route("/post/<int:post_id>/delete", methods=["POST"])
 @login_required
 def delete_post(post_id):
     validate_session()
-    post = Post.query.get_or_404(post_id)
-    if post.author != current_user:
+    postp = Post.query.get_or_404(post_id)
+    if postp.author != current_user:
         abort(403)
-    db.session.delete(post)
+    db.session.delete(postp)
     db.session.commit()
     flash("This inclause has been deleted.", "success")
     return redirect(url_for('posts.inclause'))

@@ -1,6 +1,8 @@
 from flask import Blueprint
 from flask import render_template
+from flask_login import current_user
 from zuman import appdata
+from zuman import db
 
 main = Blueprint('main', __name__)
 
@@ -19,3 +21,20 @@ def home():
 def brave():
     appdata["title"] = None
     return render_template("brave-rewards-verification.txt")
+
+
+@main.route("/api")
+def test():
+    if not current_user.is_authenticated:
+        return "{ null }"
+    q = '''
+    select u.username as "user", u.sid as "cookie", count(p.*) as "post_count"
+    from public.user u, post p where u.id={}
+    group by username, sid
+    '''
+    js = {}
+    db_exec = db.engine.execute(q.format(current_user.id))
+    for dt in db_exec:
+        js = {key: dt[key] for key in dt.keys()}
+
+    return str(js)
