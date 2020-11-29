@@ -1,9 +1,10 @@
 import os
 import secrets
-from zuman import mail
+
+from flask import current_app, url_for
 from flask_mail import Message
-from flask import url_for, current_app
 from PIL import Image
+from zuman import mail
 
 
 def save_picture(form_picture):
