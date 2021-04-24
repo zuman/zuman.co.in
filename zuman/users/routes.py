@@ -24,8 +24,7 @@ def login():
     appdata["title"] = "Log In"
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        if user and bcrypt.check_password_hash(user.password,
-                                               form.password.data):
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
             set_session()
             logging.info(f"> login {current_user.username} ...")
@@ -47,8 +46,7 @@ def register():
     appdata["title"] = "Register new account"
     if form.validate_on_submit():
         session.clear()
-        hashed_password = bcrypt.generate_password_hash(
-            form.password.data).decode("utf-8")
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
         user = User(
             username=form.username.data,
             email=form.email.data,

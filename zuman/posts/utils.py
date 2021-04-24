@@ -1,6 +1,6 @@
-from zuman import db, mail
-from zuman.models import User, Post
 from flask_login import current_user
+from zuman import db
+from zuman.models import Post
 
 
 def isfloat(value):
