@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from flask import (Blueprint, abort, flash, redirect, render_template, request, url_for)
+from flask import (Blueprint, abort, flash, redirect, render_template, request,
+                   url_for)
 from flask_login import current_user, login_required
-
-from zuman import db, appdata
+from zuman import appdata, db
 from zuman.models import Post
 from zuman.posts.forms import EditClauseForm, InclauseForm
 from zuman.posts.utils import inclauserator

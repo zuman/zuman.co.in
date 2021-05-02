@@ -4,7 +4,6 @@ import os
 from flask import (Blueprint, flash, redirect, render_template, request,
                    session, url_for)
 from flask_login import current_user, login_required, login_user
-
 from zuman import appdata, bcrypt, db
 from zuman.models import User, default_pic
 from zuman.users.forms import (LoginForm, RegistrationForm, RequestResetForm,
@@ -33,8 +32,7 @@ def login():
             return redirect(next_page) if next_page else redirect(
                 url_for("posts.inclause"))
         else:
-            flash("Login Unsuccessful. Please check email and password",
-                  "danger")
+            flash("Login Unsuccessful. Please check email and password", "danger")
     return render_template("users/login.html", appdata=appdata, form=form)
 
 

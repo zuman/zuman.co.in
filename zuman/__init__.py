@@ -42,10 +42,11 @@ def create_app(config=Config):
     sess.init_app(app)
     csrf.init_app(app)
 
-    from zuman.main.routes import main
-    from zuman.users.routes import users
-    from zuman.posts.routes import posts
     from zuman.errors.handlers import errors
+    from zuman.main.routes import main
+    from zuman.posts.routes import posts
+    from zuman.users.routes import users
+
     app.register_blueprint(main)
     app.register_blueprint(users)
     app.register_blueprint(posts)
