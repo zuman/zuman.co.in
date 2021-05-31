@@ -1,8 +1,15 @@
 # zuman.co.in
 Source code to my personal website !
 
-[zuman.co.in](https://zuman.co.in)
+This repository is the old one. Further development will be done on docker based setup found below:
 
+* Source code:
+[GitHub](https://github.com/zuman/zuman.in)
+
+* Updated Website
+[zuman.in](https://zuman.in)
+
+# This setup
 ## Setup notes:
 * Create a **conf.py** file in *zuman* directory similar to the one mentioned in the Appendix below.
 * Setup a sessions manager such as Redis or Memcached to store session data in server.
